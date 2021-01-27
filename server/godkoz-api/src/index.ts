@@ -4,10 +4,13 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import compression from 'compression';
+import connectDatabase from './utils/connectDatabase';
 
 import APIV1 from './routes/v1';
 
 const app = express();
+
+connectDatabase();
 
 // todo add mongoose
 app.use(helmet());
