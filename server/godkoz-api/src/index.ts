@@ -25,7 +25,7 @@ app.use(compression());
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 
-app.use('/hello', APIV1.Hello);
+app.use('/api/v1', APIV1);
 
 app.get('/', (req, res) => {
   return res.send('hi, running on port ' + process.env.PORT || '');

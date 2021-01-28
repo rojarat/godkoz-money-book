@@ -1,5 +1,10 @@
+import { Router } from 'express';
 import Hello from './hello.route';
+import Categories from './categories.route';
 
-export default {
-  Hello,
-};
+const router = Router();
+
+router.use('/hello', Hello);
+router.use('/categories', Categories);
+
+export default router;
