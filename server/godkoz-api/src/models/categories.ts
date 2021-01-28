@@ -5,8 +5,7 @@ const categoriesSchema = new Schema({
   title: { type: String, required: true },
   is_active: { type: Boolean, default: true },
   created_at: { type: Date, default: Date.now },
+  updated_at: { type: Date, default: Date.now },
 });
 
-export const CategoriesModel = model('categories', categoriesSchema);
-
-export default CategoriesModel;
+export default model('categories', categoriesSchema);
