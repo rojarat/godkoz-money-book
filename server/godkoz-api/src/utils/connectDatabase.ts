@@ -6,10 +6,15 @@ export function connect() {
       .connect(process.env.MONGO_URL, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
+        useFindAndModify: false,
       })
       .then(() => {
         console.log('MongoDB connected');
+      })
+      .catch((e) => {
+        console.log(e);
       });
+    mongoose.set('returnOriginal', false);
   }
   const db = mongoose.connection;
   db.on('reconnectFailed', () => {

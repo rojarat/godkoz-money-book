@@ -1,0 +1,874 @@
+openapi: '3.0.2'
+info:
+  version: 1.0.0
+  title: Godkoz Money Book API
+servers:
+  - url: http://localhost:4000
+    description: 'localhost'
+paths:
+  /api/v1/expenses:
+    get:
+      tags:
+        - Expense API
+      description: Returns a list of expense
+      summary: Find expenses by user owner
+      operationId: getExpensesByUserOwner
+      parameters:
+        - name: limit
+          in: query
+          description: Limits the number of items on a page
+          schema:
+            type: integer
+        - name: lt
+          in: query
+          description: Lower than
+          schema:
+            type: object
+          example: {
+            created_at: '2021-01-28T11:59:32+07:00',
+            total: 200
+          }
+        - name: lte
+          in: query
+          description: Lower than equal
+          schema:
+            type: object
+          example: {
+            created_at: '2021-01-28T11:59:32+07:00',
+            total: 200
+          }
+        - name: gt
+          in: query
+          description: greater than
+          schema:
+            type: object
+          example: {
+            created_at: '2021-01-28T11:59:32+07:00',
+            total: 200
+          }
+        - name: gte
+          in: query
+          description: greater than query
+          schema:
+            type: object
+          example: {
+            created_at: '2021-01-28T11:59:32+07:00',
+            total: 200
+          }
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    _id:
+                      type: string
+                    title:
+                      type: string
+                    category:
+                      type: object
+                      properties:
+                        _id:
+                          type: string
+                        title:
+                          type: string
+                    expense_type:
+                      type: string
+                    expense_at:
+                      type: string
+                    total:
+                      type: number
+                    created_at:
+                      type: string
+                    updated_at:
+                      type: string
+              example:
+                [
+                  {
+                    _id: '507f1f77bcf86cd799439011',
+                    title: 'Breakfast with friend',
+                    category:
+                      { _id: '2scf1fsvccf86cd799439011', title: 'food' },
+                    expense_type: 'expense',
+                    expense_at: '2021-01-28T11:59:32+07:00',
+                    total: 200,
+                    created_at: '2021-01-28T11:59:32+07:00',
+                    updated_at: '2021-01-28T11:59:32+07:00',
+                  },
+                ]
+        '400':
+          description: user error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: string
+                  message:
+                    type: string
+              example: { statusCode: '400', message: 'invalid parameter' }
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: string
+                  message:
+                    type: string
+              example: { statusCode: '401', message: 'Unauthorized' }
+        '500':
+          description: server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: string
+                  message:
+                    type: string
+              example: { statusCode: '5xx', message: 'something went wrong' }
+    post:
+      tags:
+        - Expense API
+      description: 'Add new expense'
+      summary: 'Add new expense by user owner'
+      operationId: postExpenseByUserOwner
+      responses:
+        '201':
+          description: 'created have been successfully'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+              example:
+                { success: true, message: 'created have been successfully' }
+        '400':
+          description: 'Invalid format'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+              example: { success: false, message: '`title` require' }
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: string
+                  message:
+                    type: string
+              example: { statusCode: '401', message: 'Unauthorized' }
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: string
+                  message:
+                    type: string
+              example: { statusCode: '500', message: 'something went wrong' }
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                category:
+                  type: string
+                expense_type:
+                  type: string
+                expense_at:
+                  type: string
+                total:
+                  type: number
+            example:
+              {
+                title: Breakfast with friend,
+                category: 2scf1fsvccf86cd799439011,
+                expense_type: expense,
+                expense_at: 2021-01-28T11:59:32+07:00,
+                total: 200.00,
+              }
+  /api/v1/expenses/{id}:
+    get:
+      tags:
+        - Expense API
+      description: Find expense by expenseID
+      summary: Get One
+      operationId: getExpenseByExpenseID
+      responses:
+        '200':
+          description: Get expense
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  title:
+                    type: string
+                  category:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                      title:
+                        type: string
+                  expense_type:
+                    type: string
+                  expense_at:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+              example:
+                {
+                  _id: '507f1f77bcf86cd799439011',
+                  title: 'Breakfast with friend',
+                  category: { _id: '2scf1fsvccf86cd799439011', title: 'food' },
+                  expense_type: 'expense',
+                  expense_at: '2021-01-28T11:59:32+07:00',
+                  created_at: '2021-01-28T11:59:32+07:00',
+                  updated_at: '2021-01-28T11:59:32+07:00',
+                }
+    patch:
+      tags:
+        - Expense API
+      description: Update expense by ID
+      summary: Update expense by ID
+      operationId: patchExpenseByExpenseID
+      responses:
+        '200':
+          description: 'updated have been successfully'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+              example:
+                { success: true, message: 'updated have been successfully' }
+        '400':
+          description: 'Invalid format'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+              example: { success: false, message: '`title` require' }
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: string
+                  message:
+                    type: string
+              example: { statusCode: '401', message: 'Unauthorized' }
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: string
+                  message:
+                    type: string
+              example: { statusCode: '500', message: 'something went wrong' }
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                category:
+                  type: string
+                expense_type:
+                  type: string
+                expense_at:
+                  type: string
+                total:
+                  type: number
+            example:
+              {
+                title: Breakfast with friend,
+                category: 2scf1fsvccf86cd799439011,
+                expense_type: expense,
+                expense_at: 2021-01-28T11:59:32+07:00,
+                total: 200.00,
+              }
+    put:
+      tags:
+        - Expense API
+      description: Update all expense by ID
+      summary: Update all expense by ID
+      operationId: putExpenseByExpenseID
+      responses:
+        '200':
+          description: 'updated have been successfully'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+              example:
+                { success: true, message: 'updated have been successfully' }
+        '400':
+          description: 'Invalid format'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+              example: { success: false, message: '`title` require' }
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: string
+                  message:
+                    type: string
+              example: { statusCode: '401', message: 'Unauthorized' }
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: string
+                  message:
+                    type: string
+              example: { statusCode: '500', message: 'something went wrong' }
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                category:
+                  type: string
+                expense_type:
+                  type: string
+                expense_at:
+                  type: string
+                total:
+                  type: number
+            example:
+              {
+                title: Breakfast with friend,
+                category: 2scf1fsvccf86cd799439011,
+                expense_type: expense,
+                expense_at: 2021-01-28T11:59:32+07:00,
+                total: 200.00,
+              }
+    delete:
+      tags:
+        - Expense API
+      description: 'Remove expense by ID'
+      summary: Remove expense
+      responses:
+        '200':
+          description: 'removed have been successfully'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+              example:
+                { success: true, message: 'removed have been successfully' }
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: string
+                  message:
+                    type: string
+              example: { statusCode: '401', message: 'Unauthorized' }
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: string
+                  message:
+                    type: string
+              example: { statusCode: '500', message: 'something went wrong' }
+  /api/v1/categories:
+    get:
+      tags:
+        - Category API
+      description: Get all categories
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    _id:
+                      type: string
+                    title:
+                      type: string
+                    is_active:
+                      type: boolean
+                    created_at:
+                      type: string
+                    updated_at:
+                      type: string
+        '400':
+          description: user error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: string
+                  message:
+                    type: string
+              example: { statusCode: '400', message: 'invalid parameter' }
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: string
+                  message:
+                    type: string
+              example: { statusCode: '401', message: 'Unauthorized' }
+        '500':
+          description: server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: string
+                  message:
+                    type: string
+              example: { statusCode: '5xx', message: 'something went wrong' }
+    post:
+      tags:
+        - Category API
+      description: 'Add new category'
+      summary: 'Add new category by admin'
+      operationId: postCategoryByAdmin
+      responses:
+        '201':
+          description: 'created have been successfully'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+              example:
+                { success: true, message: 'created have been successfully' }
+        '400':
+          description: 'Invalid format'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+              example: { success: false, message: '`title` require' }
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: string
+                  message:
+                    type: string
+              example: { statusCode: '401', message: 'Unauthorized' }
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: string
+                  message:
+                    type: string
+              example: { statusCode: '500', message: 'something went wrong' }
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+            example: { title: food }
+    put:
+      tags:
+        - Category API
+      description: 'Update category'
+      summary: 'Update category by admin'
+      operationId: putCategoryByAdmin
+      responses:
+        '200':
+          description: 'updated have been successfully'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+              example:
+                { success: true, message: 'updated have been successfully' }
+        '400':
+          description: 'Invalid format'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+              example: { success: false, message: '`title` require' }
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: string
+                  message:
+                    type: string
+              example: { statusCode: '401', message: 'Unauthorized' }
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: string
+                  message:
+                    type: string
+              example: { statusCode: '500', message: 'something went wrong' }
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                is_active:
+                  type: string
+            example: { title: food, is_active: false }
+    delete:
+      tags:
+        - Category API
+      description: 'Remove category'
+      summary: 'Remove category by admin'
+      operationId: deleteCategoryByAdmin
+      responses:
+        '200':
+          description: 'removed have been successfully'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+              example:
+                { success: true, message: 'removed have been successfully' }
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: string
+                  message:
+                    type: string
+              example: { statusCode: '401', message: 'Unauthorized' }
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: string
+                  message:
+                    type: string
+              example: { statusCode: '500', message: 'something went wrong' }
+  /api/v1/auth:
+    get:
+      tags:
+        - Auth API
+      description: Check Auth by cookie
+      responses:
+        '200':
+          description: Return auth data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  display_name:
+                    type: string
+                  picture_url:
+                    type: string
+              example:
+                {
+                  display_name: 'John Doe',
+                  picture_url: ""
+      
+                } 
+  /api/v1/auth/logout:
+    get:
+      tags:
+        - Auth API
+      description: remove user token
+      responses:
+        '200':
+          description: removed success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: 
+                    type: boolean
+                  message:
+                    type: string
+              example:
+                {
+                  success: true,
+                  message: logout success
+                }
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: string
+                  message:
+                    type: string
+              example: { statusCode: '401', message: 'Unauthorized' }
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: string
+                  message:
+                    type: string
+              example: { statusCode: '500', message: 'something went wrong' }
+  /api/v1/auth/facebook:
+    get:
+      tags:
+        - Auth API
+      description: Authenticate with facebook
+      responses:
+        '200':
+          description: Authenticate with facebook
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: 
+                    type: boolean
+                  message:
+                    type: string
+              example:
+                {
+                  success: true,
+                  message: login success
+                }
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: string
+                  message:
+                    type: string
+              example: { statusCode: '500', message: 'something went wrong' }
+  /api/v1/auth/gmail:
+    get:
+      tags:
+        - Auth API
+      description: Authenticate with gmail
+      responses:
+        '200':
+          description: Authenticate with gmail
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: 
+                    type: boolean
+                  message:
+                    type: string
+              example:
+                {
+                  success: true,
+                  message: login success
+                }
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: string
+                  message:
+                    type: string
+              example: { statusCode: '500', message: 'something went wrong' }    
+  /api/v1/auth/line:
+    get:
+      tags:
+        - Auth API
+      description: Authenticate with line
+      responses:
+        '200':
+          description: Authenticate with line
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: 
+                    type: boolean
+                  message:
+                    type: string
+              example:
+                {
+                  success: true,
+                  message: login success
+                }
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: string
+                  message:
+                    type: string
+              example: { statusCode: '500', message: 'something went wrong' }    
+              

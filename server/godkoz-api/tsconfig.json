@@ -13,6 +13,9 @@
     "removeComments": true,
     "isolatedModules": true,
     "allowJs": true,
-    "baseUrl": "."
+    "baseUrl": ".",
+    "paths": {
+      "src/*": ["src/*"]
+    }
   }
 }
