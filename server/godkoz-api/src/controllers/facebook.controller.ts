@@ -7,7 +7,7 @@ export function FacebookCallback() {
     try {
       const token = await User.UpdateUserLoggedIn(user?._id);
       // todo set secure, sameSite, domain
-      res.cookie('godkoz-id', token, {
+      res.cookie('godkoz_id', token, {
         httpOnly: true,
       });
       return res.redirect('https://localhost:3000');
