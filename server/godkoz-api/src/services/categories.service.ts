@@ -4,6 +4,6 @@ export function GetAll() {
   return Categories.find({});
 }
 
-export function AddCate(title: string) {
+export function AddCate({ title }) {
   return Categories.create({ title });
 }

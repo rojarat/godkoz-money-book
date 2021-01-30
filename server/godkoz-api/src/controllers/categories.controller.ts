@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import * as Categories from '../services/categories.service';
 
-export function GetAll() {
+export function GetAllCategories() {
   return async (req: Request, res: Response) => {
     try {
       const categories = await Categories.GetAll();
@@ -18,9 +18,8 @@ export function GetAll() {
 
 export function AddCategories() {
   return async (req: Request, res: Response) => {
-    const params = req.params as { title: string };
     try {
-      const created = await Categories.AddCate(params.title);
+      const created = await Categories.AddCate(req.body);
       return res
         .status(201)
         .json({ success: true, message: 'created have been successfully' });

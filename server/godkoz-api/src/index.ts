@@ -24,6 +24,7 @@ app.use(
 app.use(compression());
 app.use(morgan('dev'));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/api/v1', APIV1);
 
