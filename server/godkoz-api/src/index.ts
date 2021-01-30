@@ -17,6 +17,7 @@ connectDatabase();
 
 // todo add mongoose
 app.use(helmet());
+// todo CSRF for write method
 app.use(
   cors({
     // todo ใส่ whitelist

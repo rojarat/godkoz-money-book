@@ -10,6 +10,9 @@ export function connect() {
       })
       .then(() => {
         console.log('MongoDB connected');
+      })
+      .catch((e) => {
+        console.log(e);
       });
     mongoose.set('returnOriginal', false);
   }

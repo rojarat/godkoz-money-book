@@ -29,6 +29,10 @@ export function FindUserByUserId(user_id: string) {
   return Users.findOne({ user_id });
 }
 
+export function FindUserById(id: string) {
+  return Users.findById(id);
+}
+
 export function UpdateUserLoggedIn(id: string): Promise<string> {
   return new Promise(async (resolve, reject) => {
     const token = Jwt.sign(id);
