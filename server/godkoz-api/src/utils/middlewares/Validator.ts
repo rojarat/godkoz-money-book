@@ -9,7 +9,9 @@ function Validator(schema: any) {
       next();
     } catch (e) {
       console.log(e);
-      return res.json({ statusCode: '400', message: e?.message || '' });
+      return res
+        .status(400)
+        .json({ statusCode: '400', message: e?.message || '' });
     }
   };
 }
