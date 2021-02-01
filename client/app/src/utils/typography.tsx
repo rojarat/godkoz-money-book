@@ -1,14 +1,14 @@
-import Typography from "typography";
+import Typography from 'typography';
 
 export const typography = new Typography({
-  baseFontSize: "17px",
-  baseLineHeight: 1.5,
-  headerFontFamily: ["Gilda", "serif"],
-  bodyFontFamily: ["Libre Franklin", "sans-serif"],
-  scaleRatio: 2.2,
-  headerColor: "hsl(0,0%, 10%)",
+  baseFontSize: '16px',
+  baseLineHeight: 1.7,
+  headerFontFamily: ['Kanit', 'sans-serif'],
+  bodyFontFamily: ['Kanit', 'sans-serif'],
+  scaleRatio: 2.0,
+  headerColor: 'var(--lightest-slate)',
   headerWeight: 500,
-  bodyColor: "hsl(0,0%, 20%)",
+  bodyColor: 'var(--slate)',
   boldWeight: 600,
   bodyWeight: 400,
 });
