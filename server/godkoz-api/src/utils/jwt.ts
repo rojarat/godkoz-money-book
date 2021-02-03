@@ -6,7 +6,7 @@ export function sign(id: string) {
     return '';
   }
   // todo add audience
-  return jwt.sign({ sub: id }, secret, { expiresIn: '1h' });
+  return jwt.sign({ sub: id }, secret, { expiresIn: '10h' });
 }
 
 export function verify(token: string) {
