@@ -8,7 +8,7 @@ import compression from 'compression';
 import passport from 'passport';
 import connectDatabase from './utils/connectDatabase';
 import initPassportStrategy from 'src/utils/passport';
-
+import session from 'express-session';
 import APIV1 from './routes/v1';
 
 const app = express();
@@ -25,9 +25,19 @@ app.use(
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
   })
 );
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || 'abc123456',
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+
 app.use(compression());
 app.use(morgan('dev'));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
 app.use(cookieParser());
 app.use(passport.initialize());
 app.use(passport.session());
