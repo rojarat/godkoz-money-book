@@ -1,5 +1,4 @@
 import { PassportStatic } from 'passport';
-import LineStrategy from 'passport-line-auth/';
 import {
   Strategy as FacebookStrategy,
   StrategyOption,
