@@ -68,7 +68,7 @@ export default (passport: PassportStatic) => {
             display_name: profile._json.name,
             picture_url: profile._json.picture,
             email: profile._json.email,
-            provider_by: 'gmail',
+            provider_by: 'google',
           });
 
           return done('',user);

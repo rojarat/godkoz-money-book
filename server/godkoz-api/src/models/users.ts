@@ -8,7 +8,7 @@ const userSchema = new Schema({
   email: { type: String, required: true },
   provider_by: {
     type: String,
-    enum: ['facebook', 'line', 'gmail'],
+    enum: ['facebook', 'line', 'google'],
     required: true,
   },
   last_login_at: { type: Date },

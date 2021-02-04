@@ -7,7 +7,7 @@ interface UserProfileLoggedIn {
   display_name: string;
   picture_url: string;
   email: string;
-  provider_by: 'facebook' | 'gmail' | 'line';
+  provider_by: 'facebook' | 'google' | 'line';
 }
 
 export function FindOrCreateUser(payload: UserProfileLoggedIn) {

@@ -803,14 +803,14 @@ paths:
                   message:
                     type: string
               example: { statusCode: '500', message: 'something went wrong' }
-  /api/v1/auth/gmail:
+  /api/v1/auth/google:
     get:
       tags:
         - Auth API
-      description: Authenticate with gmail
+      description: Authenticate with google
       responses:
         '200':
-          description: Authenticate with gmail
+          description: Authenticate with google
           content:
             application/json:
               schema:
