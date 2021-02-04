@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import * as jwt from 'src/utils/jwt';
-import * as User from 'src/services/user';
+import * as User from 'src/services/user.service';
 import { Cookie } from 'src/interfaces/Cookie';
 
 import handleUnauthorized from './handleUnauthorized';

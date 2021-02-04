@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import * as User from 'src/services/user';
+import * as User from 'src/services/user.service';
 
 export function LINECallback() {
   return async (

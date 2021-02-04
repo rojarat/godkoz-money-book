@@ -8,7 +8,7 @@ import {
   Strategy as GoogleStrategy,
   Profile as GoogleProfile
 } from 'passport-google-oauth20';
-import { FindOrCreateUser } from 'src/services/user';
+import { FindOrCreateUser } from 'src/services/user.service';
 
 const facebookConfig: StrategyOption = {
   clientID: process.env.FACEBOOK_CLIENT_ID || 'clientID',
