@@ -44,11 +44,15 @@ export function UpdateUserLoggedIn(id: string): Promise<string> {
     };
     const DateNow = Date.now();
     try {
-      await Users.findByIdAndUpdate(id, {
-        auth_token,
-        updated_at: DateNow,
-        last_login_at: DateNow,
-      });
+      await Users.findByIdAndUpdate(
+        id,
+        {
+          auth_token,
+          updated_at: DateNow,
+          last_login_at: DateNow,
+        },
+        { runValidators: true }
+      );
 
       return resolve(token);
     } catch (e) {

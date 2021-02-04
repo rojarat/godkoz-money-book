@@ -17,7 +17,7 @@ export function UpdateExpense(
   condition: { _id: string; user: string },
   payload: ExpenseRequestBody
 ) {
-  return Expense.findOneAndUpdate(condition, payload);
+  return Expense.findOneAndUpdate(condition, payload, { runValidators: true });
 }
 
 export function DeleteExpense(_id: string, user: string) {
