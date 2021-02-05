@@ -21,6 +21,7 @@ app.use(helmet());
 app.use(
   cors({
     // todo ใส่ whitelist
+    origin: ['https://localhost:3000'],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
   })
