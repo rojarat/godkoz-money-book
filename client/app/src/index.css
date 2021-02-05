@@ -13,6 +13,9 @@
   --green: #64ffda;
   --green-tint: rgba(100, 255, 218, 0.1);
   --red: rgba(255, 7, 7, 1);
+
+  --easing: cubic-bezier(0.645, 0.045, 0.355, 1);
+  --transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
 body {
@@ -30,4 +33,8 @@ div {
 p:selection {
   background-color: var(--slate) !important;
   color: var(--lightest-slate) !important;
+}
+
+.MuiMenu-paper {
+  background-color: var(--lightest-navy) !important;
 }

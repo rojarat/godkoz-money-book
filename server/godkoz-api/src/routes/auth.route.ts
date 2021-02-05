@@ -10,6 +10,7 @@ import isAuthenticated from 'src/utils/middlewares/isAuthenticated';
 const router = Router();
 
 router.get('/', isAuthenticated, Auth.GetUserProfile());
+router.get('/logout', isAuthenticated, Auth.LogOut());
 
 router.get(
   '/facebook',
@@ -30,15 +31,15 @@ router.get(
 
 router.get(
   '/google',
-  passport.authenticate('google',{
+  passport.authenticate('google', {
     scope: ['profile', 'email'],
-    session: false
+    session: false,
   })
 );
 
 router.get(
   '/google/callback',
-  passport.authenticate('google',{
+  passport.authenticate('google', {
     failureRedirect: '/',
     session: false,
   }),

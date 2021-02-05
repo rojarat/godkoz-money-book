@@ -1,12 +1,19 @@
-import React from "react";
-import styled from "@emotion/styled";
-import { scale, rhythm } from "src/utils/typography";
+import React, { useEffect } from "react";
+
 import ExpenseCard from "src/components/ExpenseCard/ExpenseCard";
-import Card from "src/components/ui/Card";
-export default function Expense() {
+
+import { Layout } from "src/components";
+
+export function Expense() {
+  useEffect(() => {
+    document.title = "รายรับรายจ่าย | Godkoz Money Book";
+  }, []);
   return (
-    <>
+    <Layout>
+      Expense
       <ExpenseCard />
-    </>
+    </Layout>
   );
 }
+
+export default Expense;
