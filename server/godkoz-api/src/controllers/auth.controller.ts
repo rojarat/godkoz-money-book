@@ -11,3 +11,14 @@ export function GetUserProfile() {
     return res.json(profile);
   };
 }
+
+export function LogOut() {
+  return async (req: Request, res: Response) => {
+    res.cookie('godkoz_id', '', { maxAge: 0 });
+
+    return res.json({
+      success: true,
+      message: 'logout success',
+    });
+  };
+}
