@@ -1,17 +1,17 @@
-import React from 'react';
-import { typography } from 'src/utils/typography';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-import Router from 'src/pages/Router';
+import React from "react";
+import { typography } from "src/utils/typography";
+import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+import Router from "src/pages/Router";
 
 typography.injectStyles();
 
 const theme = createMuiTheme({
   typography: {
-    fontFamily: ['Kanit'].join(''),
+    fontFamily: ["Kanit"].join(""),
   },
   palette: {
     primary: {
-      main: '#64ffda',
+      main: "#64ffda",
     },
   },
 });
