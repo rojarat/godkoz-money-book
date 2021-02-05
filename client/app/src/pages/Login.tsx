@@ -3,6 +3,7 @@ import { Card } from 'src/components/ui';
 import { CardContent, Button, Grid, Icon } from '@material-ui/core';
 import styled from '@emotion/styled';
 import { scale, rhythm } from 'src/utils/typography';
+import useAuthenticator from 'src/hooks/useAuthenticator';
 
 const Center = styled.div`
   display: grid;
@@ -22,6 +23,8 @@ export default function Login() {
   useEffect(() => {
     document.title = 'Login | Godkoz Money Book';
   }, []);
+
+  const authenticate = useAuthenticator();
 
   return (
     <Center>
@@ -74,6 +77,7 @@ export default function Login() {
                   </Icon>
                 }
                 fullWidth
+                onClick={() => authenticate.LogIn('facebook')}
               >
                 เข้าสู่ระบบด้วย Facebook
               </LogInButton>
@@ -91,6 +95,7 @@ export default function Login() {
                   </Icon>
                 }
                 fullWidth
+                onClick={() => authenticate.LogIn('line')}
               >
                 เข้าสู่ระบบด้วย LINE
               </LogInButton>
@@ -108,6 +113,7 @@ export default function Login() {
                   </Icon>
                 }
                 fullWidth
+                onClick={() => authenticate.LogIn('google')}
               >
                 เข้าสู่ระบบด้วย Google
               </LogInButton>
