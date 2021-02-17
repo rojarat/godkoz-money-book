@@ -38,3 +38,6 @@ p:selection {
 .MuiMenu-paper {
   background-color: var(--lightest-navy) !important;
 }
+.MuiDialog-paper {
+  background-color: var(--lightest-navy) !important;
+}

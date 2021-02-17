@@ -1,6 +1,6 @@
-import CardMui from '@material-ui/core/Card';
-import styled from '@emotion/styled';
-import { rhythm } from 'src/utils/typography';
+import CardMui from "@material-ui/core/Card";
+import styled from "@emotion/styled";
+import { rhythm } from "src/utils/typography";
 
 export const Card = styled(CardMui)`
   background-color: var(--light-navy) !important;

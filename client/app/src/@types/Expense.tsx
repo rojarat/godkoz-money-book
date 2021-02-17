@@ -1,4 +1,4 @@
-import { Category } from "./category";
+import { Category } from "./Category";
 export interface Expense {
   _id: string;
   title: string;

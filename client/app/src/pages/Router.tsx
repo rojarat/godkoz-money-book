@@ -14,7 +14,6 @@ const Login = lazy(() => import("./Login"));
 
 function PrivateRoute(route: RouteProps) {
   const { error, loading } = useUser();
-
   if (!loading && error?.status > 400) {
     return <Redirect to="/login" />;
   }
@@ -26,8 +25,6 @@ export function RouterMain() {
     <Router>
       <Suspense fallback={<div>Loading..</div>}>
         <Switch>
-          <Route exact path="/" component={Login} />
-          <Route exact path="/expense" component={Expense} />
           <PrivateRoute exact path="/" component={Home} />
           <PrivateRoute exact path="/expense" component={Expense} />
           <Route exact path="/login" component={Login} />
