@@ -12,24 +12,45 @@ import {
   Select,
   RadioGroup,
   FormControlLabel,
+  FormControl,
+  FormHelperText,
+  Input,
+  MenuItem,
 } from "@material-ui/core/";
 import { useForm, Controller } from "react-hook-form";
 import styled from "@emotion/styled";
 import { rhythm, scale } from "src/utils/typography";
-import formatISO from "date-fns/formatISO";
+import axios from "axios";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import InputMask from "react-input-mask";
 export function FormExpense() {
   const { data } = useCategory().GetAll();
 
   const [open, setOpen] = useState(false);
-  const [selectedValue, setSelectedValue] = React.useState("a");
-  const { register, control, handleSubmit } = useForm();
-
+  // type FormValues = {
+  //   title: string;
+  //   total: number;
+  //   expense_type: string;
+  //   categoty: string;
+  //   expense_at: string;
+  // };
+  let resolver = yup.object({
+    title: yup.string().required("กรอก"),
+    total: yup.number().required("ใส่แต่เลข").typeError("ใส่แต่เลข"),
+    expense_type: yup.string().required("เลือกประเภท"),
+    category: yup.string().required("เลือกหมวดหมู่"),
+    expense_at: yup.date().required("เลือกวันที่").typeError("เลือกวันที่"),
+  });
+  const { register, control, handleSubmit, errors } = useForm({
+    resolver: yupResolver(resolver),
+  });
   const Title = styled.h4`
     margin: ${rhythm(0.5)} 0px;
     font-size: ${scale(0.5 / 6).fontSize};
     line-height: ${scale(0.5 / 6).lineHeight};
   `;
-
+  console.log({ errors });
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -38,14 +59,20 @@ export function FormExpense() {
     setOpen(false);
   };
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedValue(event.target.value);
-  };
   const onSubmit = (data: any) => {
-    var d = new Date(data.date);
-    console.log("d", d);
+    let d = new Date(data.expense_at);
     d.setHours(d.getHours() + 7, d.getMinutes(), 0);
-    console.log(d.toISOString());
+    const expense = {
+      ...data,
+      expense_at: d.toISOString(),
+    };
+    console.log("expense ::::", expense);
+    // axios
+    //   .post("http://localhost:4000/api/v1/expense", expense, {
+    //     withCredentials: true,
+    //   })
+    //   .then((response) => console.log(response))
+    //   .catch((error) => console.log(error));
   };
   return (
     <>
@@ -68,52 +95,63 @@ export function FormExpense() {
                 <Title>ประเภท:</Title>
               </Grid>
               <Grid item xs={8}>
-                <Controller
-                  name="firstName"
-                  control={control}
-                  defaultValue=""
-                  render={({ onChange, value }) => (
-                    <RadioGroup
-                      aria-label="ประเภท"
-                      name=""
-                      value={value}
-                      onChange={onChange}
-                    >
-                      <FormControlLabel
-                        value="รายรับ"
-                        control={<Radio />}
-                        label="รายรับ"
-                      />
-                      <FormControlLabel
-                        value="รายจ่าย"
-                        control={<Radio />}
-                        label="รายจ่าย"
-                      />
-                    </RadioGroup>
-                  )}
-                />
+                <FormControl component="fieldset" error={errors?.expense_type}>
+                  <FormHelperText>
+                    {errors.expense_type?.message}
+                  </FormHelperText>
+                  <Controller
+                    name="expense_type"
+                    control={control}
+                    defaultValue="income"
+                    render={({ onChange, value }) => (
+                      <RadioGroup
+                        aria-label="ประเภท"
+                        name=""
+                        value={value}
+                        onChange={onChange}
+                      >
+                        <FormControlLabel
+                          value="income"
+                          control={<Radio />}
+                          label="รายรับ"
+                        />
+                        <FormControlLabel
+                          value="expend"
+                          control={<Radio />}
+                          label="รายจ่าย"
+                        />
+                      </RadioGroup>
+                    )}
+                  />
+                </FormControl>
               </Grid>
               <Grid item xs={4}>
                 <Title>หมวดหมู่:</Title>
               </Grid>
               <Grid item xs={8}>
-                <Select native label="Age" fullWidth>
-                  <option aria-label="None" value="" />
-                  {data?.map((item) => (
-                    <option key={item._id} value={item._id}>
-                      {item.title}
-                    </option>
-                  ))}
-                </Select>
+                <FormControl component="fieldset" error={errors?.category}>
+                  <Select native name="category" inputRef={register} fullWidth>
+                    <option aria-label="None" value="" />
+
+                    {data?.map((item) => (
+                      <option key={item._id} value={item._id}>
+                        {item.title}
+                      </option>
+                    ))}
+                  </Select>
+                  <FormHelperText>{errors.category?.message}</FormHelperText>
+                </FormControl>
               </Grid>
               <Grid item xs={4}>
                 <Title>รายระเอียด:</Title>
               </Grid>
               <Grid item xs={8}>
                 <TextField
-                  name="รายละเอียด"
+                  error={errors?.title}
+                  name="title"
                   inputRef={register}
                   size="small"
+                  helperText={errors.title?.message}
                   fullWidth
                 />
               </Grid>
@@ -124,8 +162,10 @@ export function FormExpense() {
               <Grid item xs={8}>
                 <TextField
                   id="filled-margin-normal"
+                  name="expense_at"
                   type="datetime-local"
-                  name="date"
+                  error={errors?.expense_at}
+                  helperText={errors.expense_at?.message}
                   inputRef={register}
                   size="small"
                   fullWidth
@@ -135,13 +175,44 @@ export function FormExpense() {
                 <Title>จำนวนเงิน:</Title>
               </Grid>
               <Grid item xs={8}>
-                <TextField
-                  id="filled-margin-normal"
+                <Controller
                   name="total"
-                  inputRef={register}
+                  control={control}
+                  defaultValue=""
+                  render={({ onChange, value }) => (
+                    <InputMask
+                      mask="999999999"
+                      maskPlaceholder={null}
+                      value={value}
+                      onChange={onChange}
+                    >
+                      {/* <Input type="text" disableUnderline /> */}
+                      <TextField
+                        id="margin-dense"
+                        name="total"
+                        type="text"
+                        error={errors?.total}
+                        helperText={errors.total?.message}
+                        inputRef={register}
+                        size="small"
+                        fullWidth
+                      />
+                    </InputMask>
+                  )}
+                />
+                {/* <TextField
+                  id="filled-margin-normal"
+                  type="number"
+                  name="total"
+                  // inputRef={register}
+                  onKeyDown={(event) =>
+                    event.keyCode === 8 || event.keyCode === 46
+                      ? true
+                      : !isNaN(Number(event.key))
+                  }
                   size="small"
                   fullWidth
-                />
+                /> */}
               </Grid>
             </Grid>
           </DialogContent>
