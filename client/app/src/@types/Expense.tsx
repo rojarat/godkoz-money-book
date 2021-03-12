@@ -6,5 +6,6 @@ export interface Expense {
   expense_at: string;
   created_at: string;
   updated_at: string;
+  total: number;
   category: Category;
 }

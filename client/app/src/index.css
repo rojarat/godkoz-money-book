@@ -41,3 +41,6 @@ p:selection {
 .MuiDialog-paper {
   background-color: var(--lightest-navy) !important;
 }
+.MuiButton-root {
+  font-weight: 300 !important;
+}

@@ -12,7 +12,7 @@ export function useExpense() {
         method: "GET",
       }).then((res) => res.data);
 
-    const { data, mutate, error } = useSwr<Expense, any>(
+    const { data, mutate, error } = useSwr<Expense[], any>(
       "/api/v1/expense",
       fetcher,
       {

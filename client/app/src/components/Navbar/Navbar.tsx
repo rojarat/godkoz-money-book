@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -8,18 +8,18 @@ import {
   Menu,
   MenuItem,
   ListItemIcon,
-} from '@material-ui/core';
+} from "@material-ui/core";
 import {
   ExpandMore as ExpandMoreIcon,
   ExitToApp as ExitToAppIcon,
   PersonOutline as PersonOutlineIcon,
   PersonOutline,
-} from '@material-ui/icons';
-import { NavLink } from 'react-router-dom';
-import styled from '@emotion/styled';
-import useUser from 'src/hooks/useUser';
-import useAuthenticator from 'src/hooks/useAuthenticator';
-import { rhythm } from 'src/utils';
+} from "@material-ui/icons";
+import { NavLink } from "react-router-dom";
+import styled from "@emotion/styled";
+import useUser from "src/hooks/useUser";
+import useAuthenticator from "src/hooks/useAuthenticator";
+import { rhythm } from "src/utils";
 
 const Topbar = styled(AppBar)`
   color: var(--lightest-slate) !important;
@@ -80,7 +80,7 @@ const Link = styled(NavLink)`
     color: var(--green);
   }
   &:before {
-    content: '0' counter(item) '.';
+    content: "0" counter(item) ".";
     margin-right: 5px;
     color: var(--green);
     text-align: right;
@@ -104,7 +104,7 @@ export function Navbar() {
   function handleLogOut() {
     authenticate.LogOut();
     mutate(() => {
-      return { display_name: '', picture_url: '' };
+      return { display_name: "", picture_url: "" };
     });
   }
 
@@ -116,7 +116,7 @@ export function Navbar() {
             <Grid item lg={6} md={6}>
               <div>
                 <Logo
-                  src={'/logo64x64.png'}
+                  src={"/logo64x64.png"}
                   loading="lazy"
                   alt="GodKoz Money Book"
                 />
@@ -151,7 +151,7 @@ export function Navbar() {
                 >
                   <MenuItem
                     onClick={() => {
-                      console.log('แก้ไขโปรไฟล์');
+                      console.log("แก้ไขโปรไฟล์");
                     }}
                   >
                     <ListItemIcon>
